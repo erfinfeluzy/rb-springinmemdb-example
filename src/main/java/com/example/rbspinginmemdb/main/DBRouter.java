@@ -27,7 +27,7 @@ public class DBRouter extends RouteBuilder {
 	@Override
 	public void configure() throws Exception {
 		
-		from("timer://timer1?period=1000")
+		from("timer://timer1?period=10000")
 		.setBody(constant("select * from Employee"))
 		.to("jdbc:dataSource")
 		.split().simple("${body}")
@@ -38,12 +38,15 @@ public class DBRouter extends RouteBuilder {
 				
 				Map<String, Object> row = xchg.getIn().getBody(Map.class);
 				System.out.println("Processing....."+row);
+				
+				if(row == null) return;
+				
 				Employee emp = new Employee();
 				
-				emp.setId(row.get("ID").toString());
-				emp.setName(row.get("NAME").toString());
-				emp.setDob(row.get("DOB").toString());
-				emp.setSalary((Integer)row.get("SALARY"));
+				emp.setId(row.get("id").toString());
+				emp.setName(row.get("name").toString());
+				emp.setDob(row.get("dob").toString());
+				emp.setSalary((Integer)row.get("salary"));
 				
 				System.out.println("Employee: "+ emp);
 			}

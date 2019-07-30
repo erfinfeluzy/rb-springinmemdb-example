@@ -1,3 +1,5 @@
+DROP TABLE IF EXISTS Employee;
+
 CREATE TABLE Employee( 
     id varchar(4), 
     name varchar(10),
